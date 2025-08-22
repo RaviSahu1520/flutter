@@ -52,6 +52,7 @@ class DiscoverController extends GetxController {
   void onInit() {
     super.onInit();
     _setupFilterListener();
+    _initializeLocation(); // Ensure location is fetched when Discover page opens
     _loadInitialDeck();
   }
 
@@ -60,6 +61,14 @@ class DiscoverController extends GetxController {
     debounce(_filterService.currentFilter, (_) {
       _resetAndLoadDeck();
     }, time: const Duration(milliseconds: 500));
+  }
+
+  void _initializeLocation() {
+    // Fetch current location when Discover page opens to ensure location display works
+    if (!_locationController.hasLocation) {
+      DebugLogger.info('🔄 Initializing location for Discover page');
+      _locationController.getCurrentLocation();
+    }
   }
 
   Future<void> _loadInitialDeck() async {

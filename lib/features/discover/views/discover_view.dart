@@ -232,27 +232,32 @@ class DiscoverView extends GetView<DiscoverController> {
           icon = Icons.location_off_outlined;
         }
 
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: AppColors.primaryYellow,
-              size: 16, // Smaller icon
-            ),
-            const SizedBox(width: 4), // Smaller spacing
-            Flexible(
-              child: Text(
-                locationText,
-                style: TextStyle(
-                  color: AppColors.appBarText,
-                  fontSize: 14, // Smaller font
-                  fontWeight: FontWeight.w500, // Lighter weight
-                ),
-                overflow: TextOverflow.ellipsis,
+        return Container(
+          padding: const EdgeInsets.only(left: 8, right: 8), // Add space from corners
+          constraints: const BoxConstraints(maxWidth: 120), // Limit width to show full names
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: AppColors.primaryYellow,
+                size: 16,
               ),
-            ),
-          ],
+              const SizedBox(width: 6), // Better spacing
+              Expanded( // Use Expanded instead of Flexible for better text display
+                child: Text(
+                  locationText,
+                  style: TextStyle(
+                    color: AppColors.appBarText,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 1, // Single line
+                  overflow: TextOverflow.ellipsis, // Only ellipsis if absolutely necessary
+                ),
+              ),
+            ],
+          ),
         );
       }),
     );
