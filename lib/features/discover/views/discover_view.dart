@@ -32,9 +32,6 @@ class DiscoverView extends GetView<DiscoverController> {
           ),
         ),
         actions: [
-          // Location display on the left side
-          _buildLocationDisplay(locationController),
-          const SizedBox(width: 8), // Add some spacing
           // Filters button
           Obx(() => IconButton(
             icon: Stack(
@@ -72,6 +69,8 @@ class DiscoverView extends GetView<DiscoverController> {
             ),
             onPressed: () => Get.toNamed('/filters'),
           )),
+          // Location display on the right side (smaller size)
+          _buildLocationDisplay(locationController),
         ],
       ),
       body: Obx(() {
@@ -240,16 +239,16 @@ class DiscoverView extends GetView<DiscoverController> {
             Icon(
               icon,
               color: AppColors.primaryYellow,
-              size: 20,
+              size: 16, // Smaller icon
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 4), // Smaller spacing
             Flexible(
               child: Text(
                 locationText,
                 style: TextStyle(
                   color: AppColors.appBarText,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 14, // Smaller font
+                  fontWeight: FontWeight.w500, // Lighter weight
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
