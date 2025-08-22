@@ -23,6 +23,7 @@ class DiscoverView extends GetView<DiscoverController> {
       appBar: AppBar(
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
+        leading: _buildLocationDisplay(locationController),
         title: Text(
           '360ghar',
           style: TextStyle(
@@ -69,8 +70,6 @@ class DiscoverView extends GetView<DiscoverController> {
             ),
             onPressed: () => Get.toNamed('/filters'),
           )),
-          // Location display on the right side (smaller size)
-          _buildLocationDisplay(locationController),
         ],
       ),
       body: Obx(() {
