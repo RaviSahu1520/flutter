@@ -233,8 +233,7 @@ class DiscoverView extends GetView<DiscoverController> {
         }
 
         return Container(
-          padding: const EdgeInsets.only(left: 8, right: 8), // Add space from corners
-          constraints: const BoxConstraints(maxWidth: 120), // Limit width to show full names
+          padding: const EdgeInsets.only(left: 12, right: 12), // More space from corners
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -243,18 +242,16 @@ class DiscoverView extends GetView<DiscoverController> {
                 color: AppColors.primaryYellow,
                 size: 16,
               ),
-              const SizedBox(width: 6), // Better spacing
-              Expanded( // Use Expanded instead of Flexible for better text display
-                child: Text(
-                  locationText,
-                  style: TextStyle(
-                    color: AppColors.appBarText,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 1, // Single line
-                  overflow: TextOverflow.ellipsis, // Only ellipsis if absolutely necessary
+              const SizedBox(width: 6),
+              Text(
+                locationText,
+                style: TextStyle(
+                  color: AppColors.appBarText,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
