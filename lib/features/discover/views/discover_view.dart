@@ -233,29 +233,27 @@ class DiscoverView extends GetView<DiscoverController> {
         }
 
         return Container(
-          padding: const EdgeInsets.only(left: 8, right: 8),
-          constraints: const BoxConstraints(maxWidth: 180), // More generous width
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          constraints: const BoxConstraints(maxWidth: 120), // Compact but functional
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
                 color: AppColors.primaryYellow,
-                size: 16,
+                size: 14, // Smaller icon
               ),
-              const SizedBox(width: 6), // Better spacing
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 140), // Text area constraint
+              const SizedBox(width: 2), // Minimal spacing
+              Expanded(
                 child: Text(
                   locationText,
                   style: TextStyle(
                     color: AppColors.appBarText,
-                    fontSize: 14, // Back to original size
+                    fontSize: 12, // Compact size
                     fontWeight: FontWeight.w500,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  softWrap: false, // Prevent wrapping
                 ),
               ),
             ],
