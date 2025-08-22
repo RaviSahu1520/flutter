@@ -26,27 +26,30 @@ class DiscoverView extends GetView<DiscoverController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Location display with more space
+            // Location display on the left
             Expanded(
-              flex: 3, // More space for location
+              flex: 2, // Less space for location
               child: _buildLocationDisplay(locationController),
             ),
-            // Centered title with less space
+            // Perfectly centered title
             Expanded(
-              flex: 4, // More space for title
-              child: Text(
-                '360ghar',
-                style: TextStyle(
-                  color: AppColors.appBarText,
-                  fontSize: 22, // Slightly smaller to fit better
-                  fontWeight: FontWeight.bold,
+              flex: 3, // More space for title to center it
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  '360ghar',
+                  style: TextStyle(
+                    color: AppColors.appBarText,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-            // Filters button with minimal space
+            // Filters button on the right
             Expanded(
-              flex: 2, // Less space for filters
+              flex: 2, // Same space as location
               child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
@@ -56,7 +59,7 @@ class DiscoverView extends GetView<DiscoverController> {
                       Icon(
                         Icons.tune,
                         color: AppColors.iconColor,
-                        size: 20, // Smaller icon to save space
+                        size: 20,
                       ),
                       if (filterService.activeFiltersCount > 0)
                         Positioned(
@@ -76,7 +79,7 @@ class DiscoverView extends GetView<DiscoverController> {
                               '${filterService.activeFiltersCount}',
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 10, // Smaller badge
+                                fontSize: 10,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
