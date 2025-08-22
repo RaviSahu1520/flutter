@@ -23,9 +23,18 @@ class DiscoverView extends GetView<DiscoverController> {
       appBar: AppBar(
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        // --- MODIFICATION: Replaced static title with dynamic location display ---
-        title: _buildLocationDisplay(locationController),
+        title: Text(
+          '360ghar',
+          style: TextStyle(
+            color: AppColors.appBarText,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
+          // Location display on the left side
+          _buildLocationDisplay(locationController),
+          const SizedBox(width: 8), // Add some spacing
           // Filters button
           Obx(() => IconButton(
             icon: Stack(
