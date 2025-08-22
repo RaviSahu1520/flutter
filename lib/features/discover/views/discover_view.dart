@@ -234,7 +234,7 @@ class DiscoverView extends GetView<DiscoverController> {
 
         return Container(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          constraints: const BoxConstraints(maxWidth: 150), // Reasonable width for most city names
+          constraints: const BoxConstraints(maxWidth: 180), // More generous width
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -243,17 +243,19 @@ class DiscoverView extends GetView<DiscoverController> {
                 color: AppColors.primaryYellow,
                 size: 16,
               ),
-              const SizedBox(width: 4),
-              Flexible(
+              const SizedBox(width: 6), // Better spacing
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 140), // Text area constraint
                 child: Text(
                   locationText,
                   style: TextStyle(
                     color: AppColors.appBarText,
-                    fontSize: 13, // Slightly smaller font for better fit
+                    fontSize: 14, // Back to original size
                     fontWeight: FontWeight.w500,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  softWrap: false, // Prevent wrapping
                 ),
               ),
             ],
