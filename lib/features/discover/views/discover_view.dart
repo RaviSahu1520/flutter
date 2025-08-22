@@ -32,7 +32,7 @@ class DiscoverView extends GetView<DiscoverController> {
               child: _buildLocationDisplay(locationController),
             ),
             // Centered title with less space
-            const Expanded(
+            Expanded(
               flex: 4, // More space for title
               child: Text(
                 '360ghar',
@@ -49,8 +49,9 @@ class DiscoverView extends GetView<DiscoverController> {
               flex: 2, // Less space for filters
               child: Container(
                 alignment: Alignment.centerRight,
-                child: Obx(() => IconButton(
-                  icon: Stack(
+                child: IconButton(
+                  onPressed: () => Get.toNamed('/filters'),
+                  icon: Obx(() => Stack(
                     children: [
                       Icon(
                         Icons.tune,
@@ -85,8 +86,7 @@ class DiscoverView extends GetView<DiscoverController> {
                       ],
                     ),
                   ),
-                  onPressed: () => Get.toNamed('/filters'),
-                )),
+                ),
               ),
             ),
           ],
