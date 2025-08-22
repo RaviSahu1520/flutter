@@ -26,27 +26,27 @@ class DiscoverView extends GetView<DiscoverController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Location display on the left side of title
+            // Location display with more space
             Expanded(
-              flex: 1,
+              flex: 3, // More space for location
               child: _buildLocationDisplay(locationController),
             ),
-            // Centered title
+            // Centered title with less space
             const Expanded(
-              flex: 2,
+              flex: 4, // More space for title
               child: Text(
                 '360ghar',
                 style: TextStyle(
                   color: AppColors.appBarText,
-                  fontSize: 24,
+                  fontSize: 22, // Slightly smaller to fit better
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            // Filters button on the right side of title
+            // Filters button with minimal space
             Expanded(
-              flex: 1,
+              flex: 2, // Less space for filters
               child: Container(
                 alignment: Alignment.centerRight,
                 child: Obx(() => IconButton(
@@ -55,6 +55,7 @@ class DiscoverView extends GetView<DiscoverController> {
                       Icon(
                         Icons.tune,
                         color: AppColors.iconColor,
+                        size: 20, // Smaller icon to save space
                       ),
                       if (filterService.activeFiltersCount > 0)
                         Positioned(
@@ -74,7 +75,7 @@ class DiscoverView extends GetView<DiscoverController> {
                               '${filterService.activeFiltersCount}',
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 12,
+                                fontSize: 10, // Smaller badge
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
