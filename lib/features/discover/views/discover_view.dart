@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/discover_controller.dart';
 import '../../../core/controllers/filter_service.dart';
+import '../../../core/controllers/location_controller.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/error_mapper.dart';
 import '../../../../widgets/common/loading_states.dart';
@@ -14,20 +15,16 @@ class DiscoverView extends GetView<DiscoverController> {
   @override
   Widget build(BuildContext context) {
     final filterService = Get.find<FilterService>();
+    // Access the global LocationController
+    final locationController = Get.find<LocationController>();
 
     return Obx(() => Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        title: Text(
-          'app_name'.tr,
-          style: TextStyle(
-            color: AppColors.appBarText,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        // --- MODIFICATION: Replaced static title with dynamic location display ---
+        title: _buildLocationDisplay(locationController),
         actions: [
           // Filters button
           Obx(() => IconButton(
@@ -193,6 +190,64 @@ class DiscoverView extends GetView<DiscoverController> {
         
         
       ],
+    );
+  }
+
+  // --- NEW WIDGET: For displaying the current location in the AppBar ---
+  Widget _buildLocationDisplay(LocationController locationController) {
+    return GestureDetector(
+      onTap: () {
+        Get.snackbar(
+          'Refreshing Location',
+          'Getting your current location...',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+          backgroundColor: AppColors.primaryYellow.withOpacity(0.9),
+          colorText: Colors.white,
+        );
+        locationController.getCurrentLocation(forceRefresh: true);
+      },
+      child: Obx(() {
+        String locationText;
+        IconData icon;
+
+        if (locationController.isLoading.value) {
+          locationText = 'Getting location...';
+          icon = Icons.location_searching;
+        } else if (locationController.currentCity.value.isNotEmpty) {
+          locationText = locationController.currentCity.value;
+          icon = Icons.location_on;
+        } else if (locationController.locationError.value.isNotEmpty) {
+          locationText = 'Location Error';
+          icon = Icons.location_off;
+        } else {
+          locationText = 'Unknown Location';
+          icon = Icons.location_off_outlined;
+        }
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: AppColors.primaryYellow,
+              size: 20,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                locationText,
+                style: TextStyle(
+                  color: AppColors.appBarText,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
