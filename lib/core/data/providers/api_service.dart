@@ -986,6 +986,24 @@ class ApiService extends getx.GetConnect {
       });
     }
 
+    // --- FIX: Provide a valid mock AgentModel to prevent crash ---
+    if (path.contains('/agents/assigned')) {
+      return fromJson({
+        'id': 99,
+        'name': 'Mock Agent',
+        'description': 'Your helpful mock real estate agent.',
+        'avatar_url': 'https://i.pravatar.cc/150?u=mockagent',
+        'languages': ['English', 'Hindi'],
+        'agent_type': 'specialist',
+        'experience_level': 'expert',
+        'is_active': true,
+        'is_available': true,
+        'total_users_assigned': 10,
+        'user_satisfaction_rating': 4.8,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+    }
+
     if (path.contains('/properties')) {
       return fromJson({
         'properties': _getMockPropertiesData(),
