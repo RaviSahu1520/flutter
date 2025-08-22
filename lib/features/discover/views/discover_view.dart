@@ -23,54 +23,73 @@ class DiscoverView extends GetView<DiscoverController> {
       appBar: AppBar(
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        leading: _buildLocationDisplay(locationController),
-        title: Text(
-          '360ghar',
-          style: TextStyle(
-            color: AppColors.appBarText,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          // Filters button
-          Obx(() => IconButton(
-            icon: Stack(
-              children: [
-                Icon(
-                  Icons.tune,
-                  color: AppColors.iconColor,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Location display on the left side of title
+            Expanded(
+              flex: 1,
+              child: _buildLocationDisplay(locationController),
+            ),
+            // Centered title
+            const Expanded(
+              flex: 2,
+              child: Text(
+                '360ghar',
+                style: TextStyle(
+                  color: AppColors.appBarText,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
-                if (filterService.activeFiltersCount > 0)
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryYellow,
-                        borderRadius: BorderRadius.circular(10),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            // Filters button on the right side of title
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.centerRight,
+                child: Obx(() => IconButton(
+                  icon: Stack(
+                    children: [
+                      Icon(
+                        Icons.tune,
+                        color: AppColors.iconColor,
                       ),
-                      constraints: const BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                      child: Text(
-                        '${filterService.activeFiltersCount}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                      if (filterService.activeFiltersCount > 0)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryYellow,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 16,
+                              minHeight: 16,
+                            ),
+                            child: Text(
+                              '${filterService.activeFiltersCount}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
+                      ],
                     ),
                   ),
-              ],
+                  onPressed: () => Get.toNamed('/filters'),
+                )),
+              ),
             ),
-            onPressed: () => Get.toNamed('/filters'),
-          )),
-        ],
+          ],
+        ),
       ),
       body: Obx(() {
         // Show different states based on controller state
@@ -214,42 +233,41 @@ class DiscoverView extends GetView<DiscoverController> {
         );
         locationController.getCurrentLocation(forceRefresh: true);
       },
-      child: Obx(() {
-        String locationText;
-        IconData icon;
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: Obx(() {
+          String locationText;
+          IconData icon;
 
-        if (locationController.isLoading.value) {
-          locationText = 'Getting location...';
-          icon = Icons.location_searching;
-        } else if (locationController.currentCity.value.isNotEmpty) {
-          locationText = locationController.currentCity.value;
-          icon = Icons.location_on;
-        } else if (locationController.locationError.value.isNotEmpty) {
-          locationText = 'Location Error';
-          icon = Icons.location_off;
-        } else {
-          locationText = 'Unknown Location';
-          icon = Icons.location_off_outlined;
-        }
+          if (locationController.isLoading.value) {
+            locationText = 'Getting location...';
+            icon = Icons.location_searching;
+          } else if (locationController.currentCity.value.isNotEmpty) {
+            locationText = locationController.currentCity.value;
+            icon = Icons.location_on;
+          } else if (locationController.locationError.value.isNotEmpty) {
+            locationText = 'Location Error';
+            icon = Icons.location_off;
+          } else {
+            locationText = 'Unknown Location';
+            icon = Icons.location_off_outlined;
+          }
 
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          constraints: const BoxConstraints(maxWidth: 140), // More space for full names
-          child: Row(
+          return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
                 color: AppColors.primaryYellow,
-                size: 14,
+                size: 16, // Back to standard size
               ),
-              const SizedBox(width: 3), // Slightly more spacing
-              Expanded(
+              const SizedBox(width: 4), // Standard spacing
+              Flexible(
                 child: Text(
                   locationText,
                   style: TextStyle(
                     color: AppColors.appBarText,
-                    fontSize: 13, // Slightly larger for better readability
+                    fontSize: 14, // Standard readable size
                     fontWeight: FontWeight.w500,
                   ),
                   maxLines: 1,
@@ -257,9 +275,9 @@ class DiscoverView extends GetView<DiscoverController> {
                 ),
               ),
             ],
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 
